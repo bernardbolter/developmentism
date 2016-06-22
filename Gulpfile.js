@@ -19,6 +19,8 @@ var gulp = require('gulp'),
     webpackStream = require('webpack-stream'),
     webpackDevConfig = require('./webpack.dev.config'),
     uglify = require('gulp-uglify'),
+    // IMAGES
+    imagemin = require('gulp-imagemin'),
     // SVGS
     svgmin = require('gulp-svgmin'),
     svgstore = require('gulp-svgstore'),
@@ -41,11 +43,7 @@ var path = {
   ENTRY: './assets/js/gateway.js',
   SVG: './assets/svgs/*.svg',
   JS: './assets/js/**/*.js',
-  IMAGES: [
-    './assets/images/*.jpg',
-    './assets/images/*.gif',
-    '/.assets/images/*.png'
-  ],
+  IMAGES: './assets/images/*',
   FONTS: [
     './assets/fonts/*.woff2',
   	'./assets/fonts/*.woff',
@@ -205,7 +203,7 @@ gulp.task('connect', function() {
 gulp.task('watch', function() {
   gulp.watch([path.HTML], ['html-in']);
   gulp.watch([path.STYLESHEETS], ['style-in']);
-
+  gulp.watch([path.SVG], ['svg-in', 'html-in']);
 });
 
 gulp.task('default', ['svg-in', 'html-in', 'style-in', 'webpack-in', 'img-in', 'fonts-in', 'connect', 'watch']);
